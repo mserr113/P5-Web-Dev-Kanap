@@ -20,7 +20,7 @@ function populateProducts(obj) {
         const myH3 = document.createElement('h3');
         const myPara = document.createElement('p'); 
 
-        myAnchor.href ='.product.html?' + item._id;
+        myAnchor.href ='product.html?' + item._id;
         myImg.src = item.imageUrl;
         myImg.alt = item.altTxt;
         myH3.textContent = item.name;
