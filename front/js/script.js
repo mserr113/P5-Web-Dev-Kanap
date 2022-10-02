@@ -12,23 +12,26 @@ async function populate() {
 
 function populateProducts(obj) {
     const section = document.querySelector('section');
-    const item = obj.products
 
     for (const item of obj) {
+        const myAnchor = document.createElement('a');
         const myArticle = document.createElement('article');
-        const img = document.createElement('img');
+        const myImg = document.createElement('img');
         const myH3 = document.createElement('h3');
         const myPara = document.createElement('p'); 
 
-        img.src = item.imageUrl;
+        myAnchor.href ='.product.html?' + item._id;
+        myImg.src = item.imageUrl;
+        myImg.alt = item.altTxt;
         myH3.textContent = item.name;
         myPara.textContent = item.description;
-
-        myArticle.appendChild(img);
+        
+        myAnchor.appendChild(myArticle);
+        myArticle.appendChild(myImg);
         myArticle.appendChild(myH3);
         myArticle.appendChild(myPara);
 
-        section.appendChild(myArticle);
+        section.appendChild(myAnchor);
     }
 
 }
