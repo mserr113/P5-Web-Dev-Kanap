@@ -36,10 +36,27 @@ const colorOption = document.getElementById("colors");
     for (let color of colorList) {
         let newColorOption = document.createElement('option');
         newColorOption.textContent = color;
+        newColorOption.value = color;
 
     colorOption.appendChild(newColorOption);
     }
 }
 
-
 populate();
+
+const button = document.getElementById('addToCart');
+const item = [];
+button.addEventListener('click', addProductToCart);
+
+function addProductToCart(e) {
+    const color = document.getElementById('colors').value;
+    const quantity = document.getElementById('quantity').value;
+    const itemDetails = {
+        id,
+        color,
+        quantity
+    };
+    item.push(itemDetails);
+    localStorage.setItem('item', JSON.stringify(item));
+
+}
