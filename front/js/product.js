@@ -18,9 +18,10 @@ async function populate() {
 
 const itemImg = document.getElementsByClassName("item__img")[0];
 const img = document.createElement('img');
+img.setAttribute("id","image");
 img.src = product.imageUrl
 itemImg.appendChild(img);
-            
+
 document.getElementById('title').innerHTML = `
     <h1>${product.name}</h1>
     `
@@ -49,10 +50,16 @@ const item = [];
 button.addEventListener('click', addProductToCart);
 
 function addProductToCart(e) {
+    const image = document.getElementById('image').src;
+    const title = document.getElementById('title').textContent;
+    const price = document.getElementById('price').textContent;
     const color = document.getElementById('colors').value;
     const quantity = document.getElementById('quantity').value;
     const itemDetails = {
         id,
+        image,
+        title,
+        price,
         color,
         quantity
     };
