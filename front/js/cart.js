@@ -1,5 +1,6 @@
 const cartItemsElement = document.getElementById('cart__items');
 
+//moved these to be constants. Should I have? 
 const myArticle = document.createElement('article');
 myArticle.setAttribute("class","cart__item");
 //need to add data-id
