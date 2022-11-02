@@ -1,35 +1,5 @@
 const cartItemsElement = document.getElementById('cart__items');
 
-//moved these to be constants. Should I have? 
-const myArticle = document.createElement('article');
-myArticle.setAttribute("class","cart__item");
-//need to add data-id
-//need to add data-color
-const imgParentDiv = document.createElement('div');
-imgParentDiv.setAttribute("class","cart__item__img");
-const myImg = document.createElement('img');
-const itemContentDiv = document.createElement('div');
-itemContentDiv.setAttribute("class","cart__item__content");
-const descriptionParentDiv = document.createElement('div');
-descriptionParentDiv.setAttribute("class","cart__item__content__description");
-const myDescription = document.createElement('h2');
-const myColor = document.createElement('p');
-const myPrice = document.createElement('p');
-myPrice.setAttribute("class","itemPrice");
-const quantityContentDiv = document.createElement('div');
-quantityContentDiv.setAttribute("class","cart__item__content__settings");
-const quantityParentDiv = document.createElement('div');
-quantityParentDiv.setAttribute("class","cart__item__content__settings__quantity");
-const quantity = document.createElement('p');
-const myQuantity = document.createElement('INPUT');
-myQuantity.setAttribute("class","itemQuantity");
-myQuantity.setAttribute("name","itemQuantity");
-myQuantity.setAttribute("type", "number");
-const deleteParentDiv = document.createElement('div');
-deleteParentDiv.setAttribute("class","cart__item__content__settings__delete");
-const deleteItem = document.createElement('p');
-deleteItem.setAttribute("class","deleteItem");
-
 function displayCart() {
     let arrayInLocalStorage = localStorage.getItem("item"); 
     itemsInLocalStorage = JSON.parse(arrayInLocalStorage);
@@ -38,39 +8,68 @@ function displayCart() {
 }
 
 function populateCart() {
-        myImg.src = (itemsInLocalStorage[0].image);
-        myDescription.textContent = (itemsInLocalStorage[0].title);
-        myColor.textContent = (itemsInLocalStorage[0].color);
-        myPrice.textContent = "€" + (itemsInLocalStorage[0].price);
-        quantity.textContent = "Quantity : "
-        myQuantity.setAttribute("value", itemsInLocalStorage[0].quantity);
-        //do I need the min max? I read 0-100 is the default.
-        //need to apply adjustment/message if more than 100 is entered.
-        myQuantity.setAttribute("min", "1");
-        myQuantity.setAttribute("max", "100");
-        deleteItem.textContent = "Delete";
+    const myArticle = document.createElement('article');
+    myArticle.setAttribute("class","cart__item");
+    //need to add data-id
+    //need to add data-color
+    const imgParentDiv = document.createElement('div');
+    imgParentDiv.setAttribute("class","cart__item__img");
+    const myImg = document.createElement('img');
+    const itemContentDiv = document.createElement('div');
+    itemContentDiv.setAttribute("class","cart__item__content");
+    const descriptionParentDiv = document.createElement('div');
+    descriptionParentDiv.setAttribute("class","cart__item__content__description");
+    const myDescription = document.createElement('h2');
+    const myColor = document.createElement('p');
+    const myPrice = document.createElement('p');
+    myPrice.setAttribute("class","itemPrice");
+    const quantityContentDiv = document.createElement('div');
+    quantityContentDiv.setAttribute("class","cart__item__content__settings");
+    const quantityParentDiv = document.createElement('div');
+    quantityParentDiv.setAttribute("class","cart__item__content__settings__quantity");
+    const quantity = document.createElement('p');
+    const myQuantity = document.createElement('INPUT');
+    myQuantity.setAttribute("class","itemQuantity");
+    myQuantity.setAttribute("name","itemQuantity");
+    myQuantity.setAttribute("type", "number");
+    const deleteParentDiv = document.createElement('div');
+    deleteParentDiv.setAttribute("class","cart__item__content__settings__delete");
+    const deleteItem = document.createElement('p');
+    deleteItem.setAttribute("class","deleteItem");
 
-        imgParentDiv.appendChild(myImg);
+    myImg.src = (itemsInLocalStorage[0].image);
+    myDescription.textContent = (itemsInLocalStorage[0].title);
+    myColor.textContent = (itemsInLocalStorage[0].color);
+    myPrice.textContent = "€" + (itemsInLocalStorage[0].price);
+    quantity.textContent = "Quantity : "
+    myQuantity.setAttribute("value", itemsInLocalStorage[0].quantity);
+    //do I need the min max? I read 0-100 is the default.
+    //need to apply adjustment/message if more than 100 is entered.
+    myQuantity.setAttribute("min", "1");
+    myQuantity.setAttribute("max", "100");
+    deleteItem.textContent = "Delete";
 
-        descriptionParentDiv.appendChild(myDescription);
-        descriptionParentDiv.appendChild(myColor);
-        descriptionParentDiv.appendChild(myPrice);
+    imgParentDiv.appendChild(myImg);
 
-        quantityParentDiv.appendChild(quantity);
-        quantityParentDiv.appendChild(myQuantity);
-        quantityContentDiv.appendChild(quantityParentDiv);
+    descriptionParentDiv.appendChild(myDescription);
+    descriptionParentDiv.appendChild(myColor);
+    descriptionParentDiv.appendChild(myPrice);
 
-        deleteParentDiv.appendChild(deleteItem);
+    quantityParentDiv.appendChild(quantity);
+    quantityParentDiv.appendChild(myQuantity);
+    quantityContentDiv.appendChild(quantityParentDiv);
 
-        itemContentDiv.appendChild(descriptionParentDiv);
-        itemContentDiv.appendChild(quantityContentDiv);
-        itemContentDiv.appendChild(deleteParentDiv);
+    deleteParentDiv.appendChild(deleteItem);
 
-        myArticle.appendChild(imgParentDiv);
-        myArticle.appendChild(itemContentDiv);
-        
-        cartItemsElement.appendChild(myArticle);
-    }
+    itemContentDiv.appendChild(descriptionParentDiv);
+    itemContentDiv.appendChild(quantityContentDiv);
+    itemContentDiv.appendChild(deleteParentDiv);
+
+    myArticle.appendChild(imgParentDiv);
+    myArticle.appendChild(itemContentDiv);
+    
+    cartItemsElement.appendChild(myArticle);
+}
 
 displayCart();
 
@@ -82,22 +81,50 @@ displayCart();
 //   });
 
 //delete items from cart
-const deleteButtons = document.getElementsByClassName("deleteItem")
-for(var i = 0; i < deleteButtons.length; i++) {
-    var button = deleteButtons[i]
-    button.addEventListener('click', function(deleteFromCart) {
-        var buttonClicked = deleteFromCart.target;
-        buttonClicked.parentElement.parentElement.parentElement.remove();
-    })
+
+if (document.readyState == 'loading') {
+    document.addEventListener('DOMContentLoaded', loadComplete)
+} else {
+        loadComplete()
 }
 
-//
+//adding event listener to buttons once page is loaded
+function loadComplete() {
+    const deleteButtons = document.getElementsByClassName("deleteItem")
+    console.log(deleteButtons)
+    for(var i = 0; i < deleteButtons.length; i+=1) {
+        var button = deleteButtons[i]
+        button.addEventListener('click', deleteFromCart)
+    }
+}
 
+    const quantityInput = document.getElementsByClassName('itemQuantity');
+    for(var i = 0; i < quantityInput.length; i+=1) {
+        var input = quantityInput[i]
+        input.addEventListener('change', updateQuantity)
+    }
+
+//deletes item from cart when delete is clicked
+function deleteFromCart(e) {
+    var buttonClicked = e.target;
+    buttonClicked.parentElement.parentElement.parentElement.remove();
+    updateCartTotal();
+}
+
+function updateQuantity(e) {
+    var input = e.target
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1
+    }
+    updateCartTotal();
+}
+
+//updates cart total 
 function updateCartTotal() {
     var cartItemsSection = document.getElementById("cart__items")
     var cartItemArticle = cartItemsSection.getElementsByClassName("cart__item")
     var total = 0 
-        for (var i = 0; i < cartItemArticle.length; i++) {
+        for (var i = 0; i < cartItemArticle.length; i+=1) {
             var cartItem = cartItemArticle[i]
             var priceElement = cartItem.getElementsByClassName('itemPrice')[0]
             var quantityElement = cartItem.getElementsByClassName('itemQuantity')[0] 

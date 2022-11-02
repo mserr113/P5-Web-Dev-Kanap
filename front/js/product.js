@@ -7,7 +7,6 @@ const id = urlParams.get('id');
 console.log(id);
 
 async function populate() {
-
     const requestURL = `http://localhost:3000/api/products/${id}`;
     console.log(requestURL);
     const request = new Request(requestURL);
@@ -46,7 +45,7 @@ const colorOption = document.getElementById("colors");
 populate();
 
 const button = document.getElementById('addToCart');
-const item = [];
+var cart = JSON.parse(localStorage.getItem('cart')) || [];
 button.addEventListener('click', addProductToCart);
 
 function addProductToCart(e) {
@@ -54,8 +53,12 @@ function addProductToCart(e) {
     const title = document.getElementById('title').textContent;
     const price = document.getElementById('price').textContent;
     const color = document.getElementById('colors').value;
+    //add in a check to make sure quantity is within min and max incl alert
+    //add in danger class?
+    //if statement to stop them from adding to the cart if they are over max
+    // //wrap return in if statement 
     const quantity = document.getElementById('quantity').value;
-    const itemDetails = {
+    var itemDetails = {
         id,
         image,
         title,
@@ -63,7 +66,7 @@ function addProductToCart(e) {
         color,
         quantity
     };
-    item.push(itemDetails);
-    localStorage.setItem('item', JSON.stringify(item));
+    cart.push(itemDetails);
+    localStorage.setItem('cart', JSON.stringify(cart));
 
 }
