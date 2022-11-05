@@ -10,30 +10,45 @@ async function populate() {
 
 }
 
-function populateProducts(obj) {
-    const section = document.querySelector('section');
+// function populateProducts(obj) {
+//     const section = document.querySelector('section');
 
-    for (const item of obj) {
-        const myAnchor = document.createElement('a');
-        const myArticle = document.createElement('article');
-        const myImg = document.createElement('img');
-        const myH3 = document.createElement('h3');
-        const myPara = document.createElement('p'); 
+//     for (const item of obj) {
+//         const myAnchor = document.createElement('a');
+//         const myArticle = document.createElement('article');
+//         const myImg = document.createElement('img');
+//         const myH3 = document.createElement('h3');
+//         const myPara = document.createElement('p'); 
 
-        myAnchor.href ='product.html?' + "id=" + item._id;
-        myImg.src = item.imageUrl;
-        myImg.alt = item.altTxt;
-        myH3.textContent = item.name;
-        myPara.textContent = item.description;
+//         myAnchor.href ='product.html?' + "id=" + item._id;
+//         myImg.src = item.imageUrl;
+//         myImg.alt = item.altTxt;
+//         myH3.textContent = item.name;
+//         myPara.textContent = item.description;
         
-        myAnchor.appendChild(myArticle);
-        myArticle.appendChild(myImg);
-        myArticle.appendChild(myH3);
-        myArticle.appendChild(myPara);
+//         myAnchor.appendChild(myArticle);
+//         myArticle.appendChild(myImg);
+//         myArticle.appendChild(myH3);
+//         myArticle.appendChild(myPara);
 
-        section.appendChild(myAnchor);
-    }
+//         section.appendChild(myAnchor);
+//     }
 
-}
+// }
+
+const itemsSection = document.getElementById('items');
+
+var populateProducts = (products) => {
+    return (itemsSection.innerHTML = products.map((x) => {
+            return `
+        <a href='./product.html?id=' + ${x._id}>
+                <article>
+                <img src= ${x.imageUrl} alt="Lorem ipsum dolor sit amet, Kanap name1">
+                <h3 class= ${x.name} >Kanap name1</h3>
+                <p class="productDescription"> ${x.description} </p>
+                </article>
+        </a>
+    `}).join("")) 
+};
 
 populate();

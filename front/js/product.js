@@ -45,10 +45,11 @@ const colorOption = document.getElementById("colors");
 populate();
 
 const button = document.getElementById('addToCart');
-var cart = JSON.parse(localStorage.getItem('cart')) || [];
+    button.setAttribute("data-id", id);
 button.addEventListener('click', addProductToCart);
 
 function addProductToCart(e) {
+    var cart = JSON.parse(localStorage.getItem('cart')) || [];
     const image = document.getElementById('image').src;
     const title = document.getElementById('title').textContent;
     const price = document.getElementById('price').textContent;

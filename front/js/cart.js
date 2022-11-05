@@ -1,7 +1,7 @@
 const cartItemsElement = document.getElementById('cart__items');
 
 function displayCart() {
-    let arrayInLocalStorage = localStorage.getItem("item"); 
+    let arrayInLocalStorage = localStorage.getItem('cart'); 
     itemsInLocalStorage = JSON.parse(arrayInLocalStorage);
     
     populateCart();
@@ -38,11 +38,11 @@ function populateCart() {
     deleteItem.setAttribute("class","deleteItem");
 
     myImg.src = (itemsInLocalStorage[0].image);
-    myDescription.textContent = (itemsInLocalStorage[0].title);
-    myColor.textContent = (itemsInLocalStorage[0].color);
-    myPrice.textContent = "€" + (itemsInLocalStorage[0].price);
+    myDescription.textContent = (itemsInLocalStorage.title);
+    myColor.textContent = (itemsInLocalStorage.color);
+    myPrice.textContent = "€" + (itemsInLocalStorage.price);
     quantity.textContent = "Quantity : "
-    myQuantity.setAttribute("value", itemsInLocalStorage[0].quantity);
+    myQuantity.setAttribute("value", itemsInLocalStorage.quantity);
     //do I need the min max? I read 0-100 is the default.
     //need to apply adjustment/message if more than 100 is entered.
     myQuantity.setAttribute("min", "1");
@@ -98,6 +98,7 @@ function loadComplete() {
     }
 }
 
+//event listener for any quantity changes
     const quantityInput = document.getElementsByClassName('itemQuantity');
     for(var i = 0; i < quantityInput.length; i+=1) {
         var input = quantityInput[i]
@@ -111,6 +112,7 @@ function deleteFromCart(e) {
     updateCartTotal();
 }
 
+//updates cart total when quantity is changed
 function updateQuantity(e) {
     var input = e.target
     if (isNaN(input.value) || input.value <= 0) {
