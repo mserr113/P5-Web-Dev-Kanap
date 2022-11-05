@@ -41,7 +41,7 @@ const itemsSection = document.getElementById('items');
 var populateProducts = (products) => {
     return (itemsSection.innerHTML = products.map((x) => {
             return `
-        <a href='./product.html?id=' + ${x._id}>
+        <a href=./product.html?id=${x._id}>
                 <article>
                 <img src= ${x.imageUrl} alt="Lorem ipsum dolor sit amet, Kanap name1">
                 <h3 class= ${x.name} >Kanap name1</h3>
