@@ -1,19 +1,12 @@
 const queryString = window.location.search;
-console.log(queryString);
-
 const urlParams = new URLSearchParams(queryString);
-
 const id = urlParams.get('id');
-console.log(id);
 
 async function populate() {
     const requestURL = `http://localhost:3000/api/products/${id}`;
-    console.log(requestURL);
     const request = new Request(requestURL);
     const response = await fetch(request);
-    console.log(response);
     const product = await response.json();
-    console.log(product)
 
 const itemImg = document.getElementsByClassName("item__img")[0];
 const img = document.createElement('img');
@@ -50,11 +43,7 @@ button.addEventListener('click', addProductToCart);
 
 function addProductToCart(e) {
     var id = e.target.getAttribute("data-id");
-    //update 54-57 to fetch from api 
     var cart = JSON.parse(localStorage.getItem('cart')) || [];
-    // const image = document.getElementById('image').src;
-    // const title = document.getElementById('title').textContent;
-    // const price = document.getElementById('price').textContent;
     const color = document.getElementById('colors').value;
     //add in a check to make sure quantity is within min and max incl alert
     //add in danger class?
