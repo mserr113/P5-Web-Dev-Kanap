@@ -49,16 +49,18 @@ const button = document.getElementById('addToCart');
 button.addEventListener('click', addProductToCart);
 
 function addProductToCart(e) {
+    var id = e.target.getAttribute("data-id");
+    //update 54-57 to fetch from api 
     var cart = JSON.parse(localStorage.getItem('cart')) || [];
-    const image = document.getElementById('image').src;
-    const title = document.getElementById('title').textContent;
-    const price = document.getElementById('price').textContent;
+    // const image = document.getElementById('image').src;
+    // const title = document.getElementById('title').textContent;
+    // const price = document.getElementById('price').textContent;
     const color = document.getElementById('colors').value;
     //add in a check to make sure quantity is within min and max incl alert
     //add in danger class?
     //if statement to stop them from adding to the cart if they are over max
     // //wrap return in if statement 
-    const quantity = document.getElementById('quantity').value;
+    var quantity = parseInt(document.getElementById('quantity').value);
     var itemDetails = {
         id,
         image,
@@ -67,7 +69,15 @@ function addProductToCart(e) {
         color,
         quantity
     };
-    cart.push(itemDetails);
+    var searchForItemInLocalStorage = cart.find((x) => x.id === id && x.color === color);
+    //check if product already exists in cart
+    if(searchForItemInLocalStorage === undefined){
+        cart.push(itemDetails);
+    }
+    else{
+        var oldQuantity = parseInt(searchForItemInLocalStorage.quantity);
+        quantity += oldQuantity;
+    }
+    
     localStorage.setItem('cart', JSON.stringify(cart));
-
 }
