@@ -9,6 +9,62 @@ async function populate() {
     const products = await response.json();
 
     populateCart(products);
+
+    //delete items from cart
+if (document.readyState == 'loading') {
+    document.addEventListener('DOMContentLoaded', loadComplete)
+} else {
+        loadComplete()
+}
+
+//adding event listener to buttons once page is loaded
+function loadComplete() {
+    const deleteButtons = document.getElementsByClassName("deleteItem");
+    for(var i = 0; i < deleteButtons.length; i+=1) {
+        var button = deleteButtons[i]
+        button.addEventListener('click', deleteFromCart)
+    }
+}
+
+//event listener for any quantity changes
+const quantityInput = document.getElementsByClassName('itemQuantity');
+    for(var i = 0; i < quantityInput.length; i+=1) {
+        var input = quantityInput[i]
+        input.addEventListener('change', updateQuantity)
+    }
+
+//deletes item from cart when delete is clicked
+function deleteFromCart(e) {
+    var buttonClicked = e.target;
+    buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+    updateCartTotal();
+}
+
+//updates cart total when quantity is changed
+function updateQuantity(e) {
+    var input = e.target
+    if (isNaN(input.value) || input.value <= 0) {
+        input.value = 1
+    }
+    updateCartTotal();
+}
+
+//updates cart total 
+function updateCartTotal() {
+    var cartItemsSection = document.getElementById("cart__items")
+    var cartItemArticle = cartItemsSection.getElementsByClassName("cart__item")
+    var total = 0 
+        for (var i = 0; i < cartItemArticle.length; i+=1) {
+            var cartItem = cartItemArticle[i]
+            var priceElement = cartItem.getElementsByClassName('itemPrice')[0]
+            var quantityElement = cartItem.getElementsByClassName('itemQuantity')[0]
+            var price = parseFloat(priceElement.innerText.replace('€ ',''))
+            var quantity = quantityElement.value
+            total = total + (price * quantity)        
+        }
+    document.getElementById('totalPrice').innerText = total;
+
+}
 }
 
 var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
@@ -28,7 +84,7 @@ var populateCart = (products) => {
                     <div class="cart__item__content__description">
                     <h2>${searchForItem.name}</h2>
                     <p>${color}</p>
-                    <p>€ ${searchForItem.price}</p>
+                    <p class="itemPrice" >€ ${searchForItem.price}</p>
                     </div>
                     <div class="cart__item__content__settings">
                     <div class="cart__item__content__settings__quantity">
@@ -49,72 +105,5 @@ var populateCart = (products) => {
         `
     }
 } 
-
-//Min-max for quantity field
-// document.getElementsByClassName("itemQuantity").addEventListener("change", function() {
-//     let v = parseInt(this.value);
-//     if (v < 1) this.value = 1;
-//     if (v > 50) this.value = 50;
-//   });
-
-//delete items from cart
-
-// if (document.readyState == 'loading') {
-//     document.addEventListener('DOMContentLoaded', loadComplete)
-// } else {
-//         loadComplete()
-// }
-
-// //adding event listener to buttons once page is loaded
-// function loadComplete() {
-//     const deleteButtons = document.getElementsByClassName("deleteItem")
-//     console.log(deleteButtons)
-//     for(var i = 0; i < deleteButtons.length; i+=1) {
-//         var button = deleteButtons[i]
-//         button.addEventListener('click', deleteFromCart)
-//     }
-// }
-
-// //event listener for any quantity changes
-// const quantityInput = document.getElementsByClassName('itemQuantity');
-//     for(var i = 0; i < quantityInput.length; i+=1) {
-//         var input = quantityInput[i]
-//         input.addEventListener('change', updateQuantity)
-//     }
-
-// //deletes item from cart when delete is clicked
-// function deleteFromCart(e) {
-//     var buttonClicked = e.target;
-//     buttonClicked.parentElement.parentElement.parentElement.remove();
-//     updateCartTotal();
-// }
-
-// //updates cart total when quantity is changed
-// function updateQuantity(e) {
-//     var input = e.target
-//     if (isNaN(input.value) || input.value <= 0) {
-//         input.value = 1
-//     }
-//     updateCartTotal();
-// }
-
-// //updates cart total 
-// function updateCartTotal() {
-//     var cartItemsSection = document.getElementById("cart__items")
-//     var cartItemArticle = cartItemsSection.getElementsByClassName("cart__item")
-//     var total = 0 
-//         for (var i = 0; i < cartItemArticle.length; i+=1) {
-//             var cartItem = cartItemArticle[i]
-//             var priceElement = cartItem.getElementsByClassName('itemPrice')[0]
-//             var quantityElement = cartItem.getElementsByClassName('itemQuantity')[0] 
-//             var price = parseFloat(priceElement.innerText.replace('€ ',''))
-//             var quantity = quantityElement.value
-//             total = total + (price * quantity)        
-//         }
-//     document.getElementById('totalPrice').innerText = total;
-
-// }
-
-// updateCartTotal();
 
 populate();

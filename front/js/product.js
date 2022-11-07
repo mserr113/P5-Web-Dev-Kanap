@@ -58,15 +58,17 @@ function addProductToCart(e) {
         color,
         quantity
     };
-    var searchForItemInLocalStorage = cart.find((x) => x.id === id && x.color === color);
+    var existingCart = cart.find((x) => x.id === id && x.color === color);
     //check if product already exists in cart
-    if(searchForItemInLocalStorage === undefined){
+    if(!existingCart){
         cart.push(itemDetails);
+        localStorage.setItem('cart', JSON.stringify(cart));
     }
     else{
-        var oldQuantity = parseInt(searchForItemInLocalStorage.quantity);
-        quantity += oldQuantity;
+        const newCart = cart.filter((x) => !(x.id === id && x.color === color));
+        itemDetails.quantity += parseInt(existingCart.quantity);
+        newCart.push(itemDetails);
+        localStorage.setItem('cart', JSON.stringify(newCart));
     }
     
-    localStorage.setItem('cart', JSON.stringify(cart));
 }
