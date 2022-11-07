@@ -1,5 +1,6 @@
 const cartItemsElement = document.getElementById('cart__items');
 
+//fetches api so we can render image and price in populateCart function
 async function populate() {
 
     const requestURL = 'http://localhost:3000/api/products';
@@ -65,11 +66,13 @@ function updateCartTotal() {
     document.getElementById('totalPrice').innerText = total;
 
 }
+updateCartTotal()
 }
 
+//gets cart items from localstorage or returns an empty array if there isn't anything in localstorage
 var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
-console.log(cartItems);
 
+//populates cart or returns nothing if there is nothing in localstorage
 var populateCart = (products) => {
     if(cartItems.length !== 0){
         return (cartItemsElement.innerHTML = cartItems.map((x) => {
