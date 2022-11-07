@@ -52,9 +52,6 @@ function addProductToCart(e) {
     var quantity = parseInt(document.getElementById('quantity').value);
     var itemDetails = {
         id,
-        image,
-        title,
-        price,
         color,
         quantity
     };
