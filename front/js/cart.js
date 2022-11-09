@@ -11,14 +11,15 @@ async function populate() {
 
     populateCart(products);
 
-    //delete items from cart
+    
+//adding event listener to buttons once page is loaded
 if (document.readyState == 'loading') {
     document.addEventListener('DOMContentLoaded', loadComplete)
 } else {
         loadComplete()
 }
 
-//adding event listener to buttons once page is loaded
+//event listener for delete
 function loadComplete() {
     const deleteButtons = document.getElementsByClassName("deleteItem");
     for(var i = 0; i < deleteButtons.length; i+=1) {
@@ -37,9 +38,24 @@ const quantityInput = document.getElementsByClassName('itemQuantity');
 //deletes item from cart when delete is clicked
 function deleteFromCart(e) {
     var buttonClicked = e.target;
+    var itemClickedId = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+    console.log(itemClickedId);
+    var itemClickedColor = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
+    console.log(itemClickedId);
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+    var cart = JSON.parse(localStorage.getItem('cart')) || [];
+    var newCart = cart.filter((x) => !(x.id === itemClickedId && x.color === itemClickedColor));
+    console.log(newCart);
+    localStorage.setItem("cart", JSON.stringify(newCart));
     updateCartTotal();
 }
+
+// //removes deleted item from localstorage
+// function removeItemFromLocalstorage(itemClicked) {
+//     var cart = JSON.parse(localStorage.getItem('cart')) || [];
+//     const newCart = cart.filter((itemClicked) => !(itemClicked.id === id && itemClicked.color === color));
+//     localStorage.setItem("cart", JSON.stringify(newCart));
+// }
 
 //updates cart total when quantity is changed
 function updateQuantity(e) {
@@ -69,6 +85,8 @@ function updateCartTotal() {
 updateCartTotal()
 }
 
+
+
 //gets cart items from localstorage or returns an empty array if there isn't anything in localstorage
 var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
@@ -79,7 +97,7 @@ var populateCart = (products) => {
             var { id, color, quantity } = x;
             var searchForItem = products.find((y) => y._id === id) || []; 
             return `
-            <article class="cart__item" data-id="{product-ID}" data-color="{product-color}">
+            <article class="cart__item" data-id= ${id} data-color= ${color}>
                 <div class="cart__item__img">
                     <img src=${searchForItem.imageUrl} alt="Photo of a sofa">
                 </div>

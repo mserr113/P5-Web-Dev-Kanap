@@ -41,6 +41,13 @@ const button = document.getElementById('addToCart');
     button.setAttribute("data-id", id);
 button.addEventListener('click', addProductToCart);
 
+//keeps item quantity from being less than 1 or more than 100
+document.getElementById("quantity").addEventListener("change", function() {
+    let v = parseInt(this.value);
+    if (v < 1) this.value = 1;
+    if (v > 100) this.value = 100;
+  });
+
 function addProductToCart(e) {
     var id = e.target.getAttribute("data-id");
     var cart = JSON.parse(localStorage.getItem('cart')) || [];
@@ -50,11 +57,13 @@ function addProductToCart(e) {
     //if statement to stop them from adding to the cart if they are over max
     // //wrap return in if statement 
     var quantity = parseInt(document.getElementById('quantity').value);
+    
     var itemDetails = {
         id,
         color,
         quantity
     };
+
     var existingCart = cart.find((x) => x.id === id && x.color === color);
     //check if product already exists in cart
     if(!existingCart){
