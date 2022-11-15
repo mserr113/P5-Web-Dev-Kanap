@@ -26,6 +26,7 @@ function loadComplete() {
         var button = deleteButtons[i]
         button.addEventListener('click', deleteFromCart)
     }
+    updateCartQuantity();
 }
 
 //event listener for any quantity changes
@@ -48,6 +49,7 @@ function deleteFromCart(e) {
     console.log(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
     updateCartTotal();
+    updateCartQuantity();
 }
 
 //updates cart total when quantity is changed
@@ -66,10 +68,17 @@ function updateQuantity(e) {
     newCart.push({id: id, color: color, quantity: quantity});
         localStorage.setItem('cart', JSON.stringify(newCart));
     updateCartTotal();
+    updateCartQuantity();
+
 }
     
 //updates cart quantity total when quantity is changed
-
+function updateCartQuantity() {
+    var cart = JSON.parse(localStorage.getItem('cart'));
+    var cartQuantity = cart.map(cart => cart.quantity).reduce((sum, val) => sum + val, 0);
+    console.log(cartQuantity)
+    document.getElementById('totalQuantity').innerText = cartQuantity;
+}
 
 //updates cart total 
 function updateCartTotal() {
