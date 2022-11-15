@@ -40,13 +40,10 @@ const quantityInput = document.getElementsByClassName('itemQuantity');
 function deleteFromCart(e) {
     var buttonClicked = e.target;
     var itemClickedId = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
-    console.log(itemClickedId);
     var itemClickedColor = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
-    console.log(itemClickedColor);
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
     var cart = JSON.parse(localStorage.getItem('cart')) || [];
     var newCart = cart.filter((x) => !(x.id === itemClickedId && x.color === itemClickedColor));
-    console.log(newCart);
     localStorage.setItem("cart", JSON.stringify(newCart));
     updateCartTotal();
     updateCartQuantity();
@@ -58,11 +55,9 @@ function updateQuantity(e) {
     if (isNaN(input.value) || input.value <= 0) {
         input.value = 1
     }
-    console.log(input.value);
     var id = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
     var color = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
     var cart = JSON.parse(localStorage.getItem('cart'));
-    var existingCart = cart.find((x) => x.id === id && x.color === color);
     const newCart = cart.filter((x) => !(x.id === id && x.color === color));
     var quantity = parseInt(input.value)
     newCart.push({id: id, color: color, quantity: quantity});
@@ -76,7 +71,6 @@ function updateQuantity(e) {
 function updateCartQuantity() {
     var cart = JSON.parse(localStorage.getItem('cart'));
     var cartQuantity = cart.map(cart => cart.quantity).reduce((sum, val) => sum + val, 0);
-    console.log(cartQuantity)
     document.getElementById('totalQuantity').innerText = cartQuantity;
 }
 
