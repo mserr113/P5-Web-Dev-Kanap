@@ -41,7 +41,7 @@ function deleteFromCart(e) {
     var itemClickedId = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
     console.log(itemClickedId);
     var itemClickedColor = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
-    console.log(itemClickedId);
+    console.log(itemClickedColor);
     buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
     var cart = JSON.parse(localStorage.getItem('cart')) || [];
     var newCart = cart.filter((x) => !(x.id === itemClickedId && x.color === itemClickedColor));
@@ -50,21 +50,26 @@ function deleteFromCart(e) {
     updateCartTotal();
 }
 
-// //removes deleted item from localstorage
-// function removeItemFromLocalstorage(itemClicked) {
-//     var cart = JSON.parse(localStorage.getItem('cart')) || [];
-//     const newCart = cart.filter((itemClicked) => !(itemClicked.id === id && itemClicked.color === color));
-//     localStorage.setItem("cart", JSON.stringify(newCart));
-// }
-
 //updates cart total when quantity is changed
 function updateQuantity(e) {
     var input = e.target
     if (isNaN(input.value) || input.value <= 0) {
         input.value = 1
     }
+    console.log(input.value);
+    var id = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+    var color = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
+    var cart = JSON.parse(localStorage.getItem('cart'));
+    var existingCart = cart.find((x) => x.id === id && x.color === color);
+    const newCart = cart.filter((x) => !(x.id === id && x.color === color));
+    var quantity = parseInt(input.value)
+    newCart.push({id: id, color: color, quantity: quantity});
+        localStorage.setItem('cart', JSON.stringify(newCart));
     updateCartTotal();
 }
+    
+//updates cart quantity total when quantity is changed
+
 
 //updates cart total 
 function updateCartTotal() {
