@@ -136,3 +136,63 @@ var populateCart = (products) => {
 } 
 
 populate();
+
+const orderButton = document.getElementById('order');
+    orderButton.addEventListener('click', validate);
+
+
+
+function validate(e) {
+    var firstNameRegex = /^[a-zA-Z ]{2,30}$/;
+    var firstNameCtrl =  document.getElemetntById('firstName').value;
+    if (firstNameRegex.test(firstNameCtrl)){
+        return (true)
+        }
+        alert("You have entered an invalid email address!")
+        return (false)
+    }
+
+
+// function validate(lastName) {
+//     var regex = /^[a-zA-Z ]{2,30}$/;
+//     var ctrl =  document.getElemetntById(lastName);
+//     if (reg.test(email)){
+//         return true; }
+//         else{
+//         return false;
+//         }
+//        } 
+
+// function validate(address) {
+//     var regex = /^[a-zA-Z0-9\s,.'-]{3,}$/;
+//     var ctrl =  document.getElemetntById(address);
+//     if (reg.test(email)){
+//         return true; }
+//         else{
+//         return false;
+//         }
+//        } 
+
+// function validate(city) {
+//     var regex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
+//     var ctrl =  document.getElemetntById(city);
+//     return regex.test(ctrl.value);
+// }
+
+// function validate(email) {
+//     var regex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+//     var ctrl =  document.getElemetntById(email);
+//     return regex.test(ctrl.value);
+// }
+
+ 
+
+// function validateCaseSensitiveEmail(email) { 
+//     var reg = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+//     if (reg.test(email)){
+//     return true; 
+//     }
+//     else{
+//     return false;
+//     } 
+// } 
