@@ -37,7 +37,7 @@ async function populate() {
 // }
 
 const itemsSection = document.getElementById('items');
-
+//can't remove .html without breaking link.
 var populateProducts = (products) => {
     return (itemsSection.innerHTML = products.map((x) => {
             return `

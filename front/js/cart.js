@@ -142,57 +142,37 @@ const orderButton = document.getElementById('order');
 
 
 
-function validate(e) {
+function validate() {
+    function validateFirstName() {
     var firstNameRegex = /^[a-zA-Z ]{2,30}$/;
-    var firstNameCtrl =  document.getElemetntById('firstName').value;
-    if (firstNameRegex.test(firstNameCtrl)){
+    var firstNameCtrl = document.getElementById('firstName').value;
+    if (firstNameRegex.test(firstNameCtrl)){                
         return (true)
         }
-        alert("You have entered an invalid email address!")
+        alert("No numbers or special characters in first name field!")
         return (false)
     }
+    validateFirstName()
 
+    function validateLastName() {
+        var lastNameRegex = /^[a-zA-Z ]{2,30}$/;
+        var lastNameCtrl = document.getElementById('lastName').value;
+        if (lastNameRegex.test(lastNameCtrl)){
+        return (true)
+        }
+        alert("No numbers or special characters in last name field!")
+        return (false)
+        } 
+    validateLastName()
 
-// function validate(lastName) {
-//     var regex = /^[a-zA-Z ]{2,30}$/;
-//     var ctrl =  document.getElemetntById(lastName);
-//     if (reg.test(email)){
-//         return true; }
-//         else{
-//         return false;
-//         }
-//        } 
-
-// function validate(address) {
-//     var regex = /^[a-zA-Z0-9\s,.'-]{3,}$/;
-//     var ctrl =  document.getElemetntById(address);
-//     if (reg.test(email)){
-//         return true; }
-//         else{
-//         return false;
-//         }
-//        } 
-
-// function validate(city) {
-//     var regex = /^[a-zA-Z]+(?:[\s-][a-zA-Z]+)*$/;
-//     var ctrl =  document.getElemetntById(city);
-//     return regex.test(ctrl.value);
-// }
-
-// function validate(email) {
-//     var regex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
-//     var ctrl =  document.getElemetntById(email);
-//     return regex.test(ctrl.value);
-// }
-
- 
-
-// function validateCaseSensitiveEmail(email) { 
-//     var reg = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
-//     if (reg.test(email)){
-//     return true; 
-//     }
-//     else{
-//     return false;
-//     } 
-// } 
+    function validateEmail() {
+        var emailRegex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+        var emailCtrl = document.getElementById('email').value;
+        if (emailRegex.test(emailCtrl)){
+        return (true)
+        }
+        alert("Enter a valid email address!")
+        return (false)
+    }
+    validateEmail()
+}
