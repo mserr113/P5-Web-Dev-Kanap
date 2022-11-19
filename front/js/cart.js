@@ -140,9 +140,7 @@ populate();
 const orderButton = document.getElementById('order');
     orderButton.addEventListener('click', validate);
 
-
-
-function validate() {
+function validate(e) {
     function validateFirstName() {
     var firstNameRegex = /^[a-zA-Z ]{2,30}$/;
     var firstNameCtrl = document.getElementById('firstName').value;
@@ -176,3 +174,13 @@ function validate() {
     }
     validateEmail()
 }
+
+const form = document.getElementsByClassName('cart__order__form')[0];
+form.addEventListener('submit', getFormData);
+    function getFormData(e) {
+        e.preventDefault();
+        const myFormData = new FormData(e.target);
+        const formDataObj = {};
+        myFormData.forEach((value, key) => (formDataObj[key] = value));
+        console.log(formDataObj);
+    };
