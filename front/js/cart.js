@@ -137,50 +137,56 @@ var populateCart = (products) => {
 
 populate();
 
-const orderButton = document.getElementById('order');
-    orderButton.addEventListener('click', validate);
-
-function validate(e) {
-    function validateFirstName() {
-    var firstNameRegex = /^[a-zA-Z ]{2,30}$/;
-    var firstNameCtrl = document.getElementById('firstName').value;
-    if (firstNameRegex.test(firstNameCtrl)){                
-        return (true)
-        }
-        alert("No numbers or special characters in first name field!")
-        return (false)
-    }
-    validateFirstName()
-
-    function validateLastName() {
-        var lastNameRegex = /^[a-zA-Z ]{2,30}$/;
-        var lastNameCtrl = document.getElementById('lastName').value;
-        if (lastNameRegex.test(lastNameCtrl)){
-        return (true)
-        }
-        alert("No numbers or special characters in last name field!")
-        return (false)
-        } 
-    validateLastName()
-
-    function validateEmail() {
-        var emailRegex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
-        var emailCtrl = document.getElementById('email').value;
-        if (emailRegex.test(emailCtrl)){
-        return (true)
-        }
-        alert("Enter a valid email address!")
-        return (false)
-    }
-    validateEmail()
-}
+// const orderButton = document.getElementById('order');    
+//     orderButton.addEventListener('click', validate);
 
 const form = document.getElementsByClassName('cart__order__form')[0];
-form.addEventListener('submit', getFormData);
-    function getFormData(e) {
-        e.preventDefault();
-        const myFormData = new FormData(e.target);
+    form.addEventListener("submit", function(event){
+    console.log("submitted")
+    event.preventDefault()
+    validate(event);
+  });
+
+function validate(event) {
+    console.log("validated")
+    var firstName = document.getElementById('firstName').value;
+    var lastName = document.getElementById('lastName').value;
+    var address = document.getElementById('address').value;
+    var city = document.getElementById('city').value;
+    var email = document.getElementById('email').value;
+
+    var firstNameRegex = /^[a-zA-Z ]{2,30}$/;
+    var lastNameRegex = /^[a-zA-Z ]{2,30}$/;
+    var emailRegex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
+
+    if(firstName.trim() =="" || lastName.trim() =="" || address.trim() =="" || city.trim() =="" || email.trim() =="")
+    {
+        alert("The form is missing information");
+    }
+
+    else if ((firstNameRegex.test(firstName) && lastNameRegex.test(lastName) && emailRegex.test(email)))
+    {
+        alert("Success!");
+        getFormData(event);
+    }
+
+    else
+    {
+        alert("There is invalid information in the form");
+    }
+}
+
+    function getFormData(event) {
+        console.log("getting form data")
+        const myFormData = new FormData(event.target);
         const formDataObj = {};
         myFormData.forEach((value, key) => (formDataObj[key] = value));
         console.log(formDataObj);
     };
+
+
+
+// const options = {
+//     method: 'POST'
+// };
+// fetch('http://localhost:3000/api/order', options)
