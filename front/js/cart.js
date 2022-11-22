@@ -176,17 +176,19 @@ function validate(event) {
     }
 }
 
-    function getFormData(event) {
-        console.log("getting form data")
-        const myFormData = new FormData(event.target);
-        const formDataObj = {};
-        myFormData.forEach((value, key) => (formDataObj[key] = value));
-        console.log(formDataObj);
+//get form data and post
+function getFormData(event) {
+    console.log("getting form data")
+    const myFormData = new FormData(event.target);
+    formDataObj = {};
+    myFormData.forEach((value, key) => (formDataObj[key] = value));
+
+    const options = {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(formDataObj)
     };
-
-
-
-// const options = {
-//     method: 'POST'
-// };
-// fetch('http://localhost:3000/api/order', options)
+    fetch('/order', options) 
+};
