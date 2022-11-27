@@ -180,8 +180,11 @@ function validate(event) {
 function getFormData(event) {
     console.log("getting form data")
     const myFormData = new FormData(event.target);
-    formDataObj = {};
-    myFormData.forEach((value, key) => (formDataObj[key] = value));
+    const formDataObj = {
+        contact:{}
+    };
+    myFormData.forEach((value, key) => (formDataObj.contact[key] = value));
+    formDataObj.products = JSON.parse(localStorage.getItem('cart')).map((product) => product.id)
 
     const options = {
         method: 'POST',
@@ -190,5 +193,12 @@ function getFormData(event) {
         },
         body: JSON.stringify(formDataObj)
     };
-    fetch('/order', options) 
+    fetch('http://localhost:3000/api/products/order', options)
+    .then(response => response.json())
+    .then(data => {
+    console.log(data);
+    var orderId = data.orderId;
+    window.location.href ="./confirmation.html?id=" + orderId
+  })
+  .catch((error) => {alert("error in request: " + error)});
 };
