@@ -199,6 +199,7 @@ function getFormData(event) {
     console.log(data);
     var orderId = data.orderId;
     window.location.href ="./confirmation.html?id=" + orderId
+    localStorage.clear();
   })
   .catch((error) => {alert("error in request: " + error)});
 };
