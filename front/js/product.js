@@ -2,11 +2,13 @@ const queryString = window.location.search;
 const urlParams = new URLSearchParams(queryString);
 const id = urlParams.get('id');
 
+//creates JSON data from id in URL param
 async function populate() {
     const requestURL = `http://localhost:3000/api/products/${id}`;
     const request = new Request(requestURL);
     const response = await fetch(request);
     const product = await response.json();
+
 
 const itemImg = document.getElementsByClassName("item__img")[0];
 const img = document.createElement('img');
@@ -44,8 +46,12 @@ button.addEventListener('click', addProductToCart);
 //keeps item quantity from being less than 1 or more than 100
 document.getElementById("quantity").addEventListener("change", function() {
     let v = parseInt(this.value);
-    if (v < 1) this.value = 1;
-    if (v > 100) this.value = 100;
+    if (v < 1){
+        alert("quantity cannot be less than 1");
+    }
+    if (v > 100) {
+        alert("quantity cannot exceed 100");
+    }
   });
 
 function addProductToCart(e) {
