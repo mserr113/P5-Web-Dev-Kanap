@@ -47,40 +47,45 @@ button.addEventListener('click', addProductToCart);
 document.getElementById("quantity").addEventListener("change", function() {
     let v = parseInt(this.value);
     if (v < 1){
-        alert("quantity cannot be less than 1");
+        alert("Numbles of articles cannot be less than 1");
     }
     if (v > 100) {
-        alert("quantity cannot exceed 100");
+        alert("Number of articles cannot exceed 100");
     }
   });
 
+//adds product to cart
 function addProductToCart(e) {
     var id = e.target.getAttribute("data-id");
     var cart = JSON.parse(localStorage.getItem('cart')) || [];
     const color = document.getElementById('colors').value;
-    //add in a check to make sure quantity is within min and max incl alert
-    //add in danger class?
-    //if statement to stop them from adding to the cart if they are over max
-    // //wrap return in if statement 
     var quantity = parseInt(document.getElementById('quantity').value);
-    
     var itemDetails = {
         id,
         color,
         quantity
     };
-
-    var existingCart = cart.find((x) => x.id === id && x.color === color);
-    //check if product already exists in cart
-    if(!existingCart){
-        cart.push(itemDetails);
-        localStorage.setItem('cart', JSON.stringify(cart));
+    //checks that quantity does not exceed 100
+    if (itemDetails.quantity > 100) {
+        alert("Number of articles cannot exceed 100")
     }
-    else{
-        const newCart = cart.filter((x) => !(x.id === id && x.color === color));
-        itemDetails.quantity += parseInt(existingCart.quantity);
-        newCart.push(itemDetails);
-        localStorage.setItem('cart', JSON.stringify(newCart));
+    //checks that a color is selected
+    if (itemDetails.color === "") {
+        alert("Please choose your color")
+    }
+    else {
+        var existingCart = cart.find((x) => x.id === id && x.color === color);
+        //check if product already exists in cart
+        if(!existingCart){
+            cart.push(itemDetails);
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+        else{
+            const newCart = cart.filter((x) => !(x.id === id && x.color === color));
+            itemDetails.quantity += parseInt(existingCart.quantity);
+            newCart.push(itemDetails);
+            localStorage.setItem('cart', JSON.stringify(newCart));
+        }
     }
     
 }
