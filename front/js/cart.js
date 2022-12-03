@@ -19,7 +19,7 @@ async function populate() {
         loadComplete()
     }
 
-    //event listener for delete
+    //event listener for delete 
     function loadComplete() {
         const deleteButtons = document.getElementsByClassName("deleteItem");
         for (var i = 0; i < deleteButtons.length; i += 1) {
@@ -130,8 +130,9 @@ var populateCart = (products) => {
         })
             .join(""));
     } else {
-        cartItemsElement.innerHTML = `
+        cartItemsElement.innerHTML = `0 articles in your cart
         `
+        return
     }
 }
 
