@@ -11,86 +11,86 @@ async function populate() {
 
     populateCart(products);
 
-    
-//adding event listener to buttons once page is loaded
-if (document.readyState == 'loading') {
-    document.addEventListener('DOMContentLoaded', loadComplete)
-} else {
+
+    //adding event listener to buttons once page is loaded
+    if (document.readyState == 'loading') {
+        document.addEventListener('DOMContentLoaded', loadComplete)
+    } else {
         loadComplete()
-}
-
-//event listener for delete
-function loadComplete() {
-    const deleteButtons = document.getElementsByClassName("deleteItem");
-    for(var i = 0; i < deleteButtons.length; i+=1) {
-        var button = deleteButtons[i]
-        button.addEventListener('click', deleteFromCart)
     }
-    updateCartQuantity();
-}
 
-//event listener for any quantity changes
-const quantityInput = document.getElementsByClassName('itemQuantity');
-    for(var i = 0; i < quantityInput.length; i+=1) {
+    //event listener for delete
+    function loadComplete() {
+        const deleteButtons = document.getElementsByClassName("deleteItem");
+        for (var i = 0; i < deleteButtons.length; i += 1) {
+            var button = deleteButtons[i]
+            button.addEventListener('click', deleteFromCart)
+        }
+        updateCartQuantity();
+    }
+
+    //event listener for any quantity changes
+    const quantityInput = document.getElementsByClassName('itemQuantity');
+    for (var i = 0; i < quantityInput.length; i += 1) {
         var input = quantityInput[i]
         input.addEventListener('change', updateQuantity)
     }
 
-//deletes item from cart when delete is clicked
-function deleteFromCart(e) {
-    var buttonClicked = e.target;
-    var itemClickedId = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
-    var itemClickedColor = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
-    buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
-    var cart = JSON.parse(localStorage.getItem('cart')) || [];
-    var newCart = cart.filter((x) => !(x.id === itemClickedId && x.color === itemClickedColor));
-    localStorage.setItem("cart", JSON.stringify(newCart));
-    updateCartTotal();
-    updateCartQuantity();
-}
-
-//updates cart total when quantity is changed
-function updateQuantity(e) {
-    var input = e.target
-    if (isNaN(input.value) || input.value <= 0) {
-        input.value = 1
+    //deletes item from cart when delete is clicked
+    function deleteFromCart(e) {
+        var buttonClicked = e.target;
+        var itemClickedId = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+        var itemClickedColor = buttonClicked.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
+        buttonClicked.parentElement.parentElement.parentElement.parentElement.remove();
+        var cart = JSON.parse(localStorage.getItem('cart')) || [];
+        var newCart = cart.filter((x) => !(x.id === itemClickedId && x.color === itemClickedColor));
+        localStorage.setItem("cart", JSON.stringify(newCart));
+        updateCartTotal();
+        updateCartQuantity();
     }
-    var id = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
-    var color = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
-    var cart = JSON.parse(localStorage.getItem('cart'));
-    const newCart = cart.filter((x) => !(x.id === id && x.color === color));
-    var quantity = parseInt(input.value)
-    newCart.push({id: id, color: color, quantity: quantity});
+
+    //updates cart total when quantity is changed
+    function updateQuantity(e) {
+        var input = e.target
+        if (isNaN(input.value) || input.value <= 0) {
+            input.value = 1
+        }
+        var id = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-id');
+        var color = input.parentElement.parentElement.parentElement.parentElement.getAttribute('data-color');
+        var cart = JSON.parse(localStorage.getItem('cart'));
+        const newCart = cart.filter((x) => !(x.id === id && x.color === color));
+        var quantity = parseInt(input.value)
+        newCart.push({ id: id, color: color, quantity: quantity });
         localStorage.setItem('cart', JSON.stringify(newCart));
-    updateCartTotal();
-    updateCartQuantity();
+        updateCartTotal();
+        updateCartQuantity();
 
-}
-    
-//updates cart quantity total when quantity is changed
-function updateCartQuantity() {
-    var cart = JSON.parse(localStorage.getItem('cart'));
-    var cartQuantity = cart.map(cart => cart.quantity).reduce((sum, val) => sum + val, 0);
-    document.getElementById('totalQuantity').innerText = cartQuantity;
-}
+    }
 
-//updates cart total 
-function updateCartTotal() {
-    var cartItemsSection = document.getElementById("cart__items")
-    var cartItemArticle = cartItemsSection.getElementsByClassName("cart__item")
-    var total = 0 
-        for (var i = 0; i < cartItemArticle.length; i+=1) {
+    //updates cart quantity total when quantity is changed
+    function updateCartQuantity() {
+        var cart = JSON.parse(localStorage.getItem('cart'));
+        var cartQuantity = cart.map(cart => cart.quantity).reduce((sum, val) => sum + val, 0);
+        document.getElementById('totalQuantity').innerText = cartQuantity;
+    }
+
+    //updates cart total 
+    function updateCartTotal() {
+        var cartItemsSection = document.getElementById("cart__items")
+        var cartItemArticle = cartItemsSection.getElementsByClassName("cart__item")
+        var total = 0
+        for (var i = 0; i < cartItemArticle.length; i += 1) {
             var cartItem = cartItemArticle[i]
             var priceElement = cartItem.getElementsByClassName('itemPrice')[0]
             var quantityElement = cartItem.getElementsByClassName('itemQuantity')[0]
-            var price = parseFloat(priceElement.innerText.replace('€ ',''))
+            var price = parseFloat(priceElement.innerText.replace('€ ', ''))
             var quantity = quantityElement.value
-            total = total + (price * quantity)        
+            total = total + (price * quantity)
         }
-    document.getElementById('totalPrice').innerText = total;
+        document.getElementById('totalPrice').innerText = total;
 
-}
-updateCartTotal()
+    }
+    updateCartTotal()
 }
 
 
@@ -100,10 +100,10 @@ var cartItems = JSON.parse(localStorage.getItem("cart")) || [];
 
 //populates cart or returns nothing if there is nothing in localstorage
 var populateCart = (products) => {
-    if(cartItems.length !== 0){
+    if (cartItems.length !== 0) {
         return (cartItemsElement.innerHTML = cartItems.map((x) => {
             var { id, color, quantity } = x;
-            var searchForItem = products.find((y) => y._id === id) || []; 
+            var searchForItem = products.find((y) => y._id === id) || [];
             return `
             <article class="cart__item" data-id= ${id} data-color= ${color}>
                 <div class="cart__item__img">
@@ -128,12 +128,12 @@ var populateCart = (products) => {
             </article>
             `;
         })
-        .join(""));
+            .join(""));
     } else {
-        cartItemsElement.innerHTML =`
+        cartItemsElement.innerHTML = `
         `
     }
-} 
+}
 
 populate();
 
@@ -141,11 +141,11 @@ populate();
 //     orderButton.addEventListener('click', validate);
 
 const form = document.getElementsByClassName('cart__order__form')[0];
-    form.addEventListener("submit", function(event){
+form.addEventListener("submit", function (event) {
     console.log("submitted")
     event.preventDefault()
     validate(event);
-  });
+});
 
 function validate(event) {
     console.log("validated")
@@ -159,19 +159,16 @@ function validate(event) {
     var lastNameRegex = /^[a-zA-Z ]{2,30}$/;
     var emailRegex = /^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/;
 
-    if(firstName.trim() =="" || lastName.trim() =="" || address.trim() =="" || city.trim() =="" || email.trim() =="")
-    {
+    if (firstName.trim() == "" || lastName.trim() == "" || address.trim() == "" || city.trim() == "" || email.trim() == "") {
         alert("The form is missing information");
     }
 
-    else if ((firstNameRegex.test(firstName) && lastNameRegex.test(lastName) && emailRegex.test(email)))
-    {
+    else if ((firstNameRegex.test(firstName) && lastNameRegex.test(lastName) && emailRegex.test(email))) {
         alert("Success!");
         getFormData(event);
     }
 
-    else
-    {
+    else {
         alert("There is invalid information in the form");
     }
 }
@@ -181,7 +178,7 @@ function getFormData(event) {
     console.log("getting form data")
     const myFormData = new FormData(event.target);
     const formDataObj = {
-        contact:{}
+        contact: {}
     };
     myFormData.forEach((value, key) => (formDataObj.contact[key] = value));
     formDataObj.products = JSON.parse(localStorage.getItem('cart')).map((product) => product.id)
@@ -194,12 +191,12 @@ function getFormData(event) {
         body: JSON.stringify(formDataObj)
     };
     fetch('http://localhost:3000/api/products/order', options)
-    .then(response => response.json())
-    .then(data => {
-    console.log(data);
-    var orderId = data.orderId;
-    window.location.href ="./confirmation?id=" + orderId
-    localStorage.clear();
-  })
-  .catch((error) => {alert("error in request: " + error)});
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            var orderId = data.orderId;
+            window.location.href = "./confirmation.html?id=" + orderId
+            localStorage.clear();
+        })
+        .catch((error) => { alert("error in request: " + error) });
 };

@@ -77,11 +77,10 @@ exports.orderProducts = (req, res, next) => {
   }
   Promise.all(queries).then(
     (products) => {
-      const orderId = uuid();
       return res.status(201).json({
         contact: req.body.contact,
         products: products,
-        orderId: orderId
+        orderId: uuid()
       })
     }
   ).catch(

@@ -45,11 +45,11 @@ button.addEventListener('click', addProductToCart);
 
 //keeps item quantity from being less than 1 or more than 100
 document.getElementById("quantity").addEventListener("change", function() {
-    let v = parseInt(this.value);
-    if (v < 1){
-        alert("Numbles of articles cannot be less than 1");
+    const quantityValue = parseInt(this.value);
+    if (quantityValue < 1){
+        alert("Number of articles cannot be less than 1");
     }
-    if (v > 100) {
+    if (quantityValue > 100) {
         alert("Number of articles cannot exceed 100");
     }
   });
@@ -69,7 +69,7 @@ function addProductToCart(e) {
     if (itemDetails.quantity > 100) {
         alert("Number of articles cannot exceed 100")
     }
-    //checks that a color is selected
+    //checks that a color is selected 
     if (itemDetails.color === "") {
         alert("Please choose your color")
     }
