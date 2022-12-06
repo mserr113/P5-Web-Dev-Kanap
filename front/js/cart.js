@@ -22,7 +22,7 @@ async function populate() {
     //event listener for delete 
     function loadComplete() {
         const deleteButtons = document.getElementsByClassName("deleteItem");
-        for (const i = 0; i < deleteButtons.length; i += 1) {
+        for (let i = 0; i < deleteButtons.length; i += 1) {
             const button = deleteButtons[i]
             button.addEventListener('click', deleteFromCart)
         }
@@ -31,7 +31,7 @@ async function populate() {
 
     //event listener for any quantity changes
     const quantityInput = document.getElementsByClassName('itemQuantity');
-    for (const i = 0; i < quantityInput.length; i += 1) {
+    for (let i = 0; i < quantityInput.length; i += 1) {
         const input = quantityInput[i]
         input.addEventListener('change', updateQuantity)
     }
@@ -78,8 +78,8 @@ async function populate() {
     function updateCartTotal() {
         const cartItemsSection = document.getElementById("cart__items")
         const cartItemArticle = cartItemsSection.getElementsByClassName("cart__item")
-        const total = 0
-        for (const i = 0; i < cartItemArticle.length; i += 1) {
+        let total = 0
+        for (let i = 0; i < cartItemArticle.length; i += 1) {
             const cartItem = cartItemArticle[i]
             const priceElement = cartItem.getElementsByClassName('itemPrice')[0]
             const quantityElement = cartItem.getElementsByClassName('itemQuantity')[0]
@@ -174,7 +174,6 @@ function validate(event) {
 
 //get form data and post
 function getFormData(event) {
-    console.log("getting form data")
     const myFormData = new FormData(event.target);
     const formDataObj = {
         contact: {}
@@ -192,7 +191,6 @@ function getFormData(event) {
     fetch('http://localhost:3000/api/products/order', options)
         .then(response => response.json())
         .then(data => {
-            console.log(data);
             const orderId = data.orderId;
             window.location.href = "./confirmation.html?id=" + orderId
             localStorage.clear();
