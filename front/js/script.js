@@ -15,9 +15,9 @@ async function populate() {
 //populates product
 //fail safes: filter out products that are missing info, .catch catches errors, "type of" tests, eg. isArray
 const itemsSection = document.getElementById('items');
-var populateProducts = (products) => {
+const populateProducts = (products) => {
     //filters out any items with missing information before mapping.
-    var productsWithImages = products.filter((x) => {
+    const productsWithImages = products.filter((x) => {
         return x.imageUrl !=="http://localhost:3000/images/" && x.name !=="" && x.description !=="" && x.colors !=="" && x.price !=="";
     })
     //maps items that contain all product information in API

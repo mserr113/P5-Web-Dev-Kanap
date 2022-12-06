@@ -56,11 +56,11 @@ document.getElementById("quantity").addEventListener("change", function () {
 
 //adds product to cart
 function addProductToCart(e) {
-    var id = e.target.getAttribute("data-id");
-    var cart = JSON.parse(localStorage.getItem('cart')) || [];
+    const id = e.target.getAttribute("data-id");
+    const cart = JSON.parse(localStorage.getItem('cart')) || [];
     const color = document.getElementById('colors').value;
-    var quantity = parseInt(document.getElementById('quantity').value);
-    var itemDetails = {
+    const quantity = parseInt(document.getElementById('quantity').value);
+    let itemDetails = {
         id,
         color,
         quantity
@@ -76,7 +76,7 @@ function addProductToCart(e) {
         return
     }
     else {
-        var existingCart = cart.find((x) => x.id === id && x.color === color);
+        const existingCart = cart.find((x) => x.id === id && x.color === color);
         //check if product already exists in cart
         if (!existingCart) {
             cart.push(itemDetails);
