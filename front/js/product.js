@@ -7,6 +7,9 @@ async function populate() {
     const requestURL = `http://localhost:3000/api/products/${id}`;
     const request = new Request(requestURL);
     const response = await fetch(request);
+
+    if (!response.ok) throw new Error("whoops, something went wrong!")
+
     const product = await response.json();
 
 
